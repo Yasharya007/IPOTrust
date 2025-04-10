@@ -1,13 +1,10 @@
 import { useState } from 'react'
-
+import CreateIPO from './components/CreateIPO.jsx'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        DApp
-       </div>
+      <CreateIPO/>
     </>
   )
 }

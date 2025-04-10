@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
+import ipoRoutes from "./routes/IPO.js";
 dotenv.config({
     path:'./.env'
 })
@@ -20,7 +21,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.static("public"))
 
 // ROUTES
-
+app.use("/api/ipo", ipoRoutes);
 // MONGOOSE SETUP
 
 //Connect database function
