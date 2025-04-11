@@ -48,3 +48,19 @@ export const getIpoById = async (req, res) => {
     res.status(500).json({ message: "Error fetching IPO", error });
   }
 };
+
+export const addApplicants = async (req, res) => {
+  const { contractAddress, applicantDematMap } = req.body;
+  try {
+    const ipo = await Ipo.findOne({ contractAddress });
+    if (!ipo) return res.status(404).json({ message: "IPO not found" });
+
+    ipo.applicantDematMap.push(...applicantDematMap);
+    await ipo.save();
+
+    res.status(200).json({ message: "Applicants added to backend." });
+  } catch (error) {
+    console.error("Error adding applicants:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

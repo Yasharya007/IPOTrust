@@ -26,14 +26,14 @@ const ipoSchema = new mongoose.Schema({
     enum: ["contractDeployed", "seedsSubmitted", "lotteryCompleted"],
     default: "contractDeployed",
   },
-  applicantDematHashes: {
-    type: [String],
-    default: [],
-  },
-  winnerHashes: {
-    type: [String], // store hashed IDs of winners
-    default: [],
-  },
+  applicantDematMap: [{
+    dematId: String,
+    hash: String
+  }],
+  winners: [{
+    hash: String,
+    dematId: String, // real ID resolved via backend mapping
+  }],  
   createdAt: {
     type: Date,
     default: Date.now,

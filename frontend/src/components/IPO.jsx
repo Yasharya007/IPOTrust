@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import UploadApplicants from "./UploadApplicants.jsx";
 import axios from "axios";
 
 const IPO = () => {
@@ -26,6 +27,7 @@ const IPO = () => {
   if (!ipo) return <div>IPO not found.</div>;
 
   return (
+    <>
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">IPO Details</h2>
       <p><strong>Company:</strong> {ipo.companyName}</p>
@@ -35,6 +37,8 @@ const IPO = () => {
       <p><strong>SEBI:</strong> {ipo.sebi}</p>
       <p><strong>Status:</strong> {ipo.status}</p>
     </div>
+    <UploadApplicants contractAddress={ipo.contractAddress} />
+    </>
   );
 };
 
