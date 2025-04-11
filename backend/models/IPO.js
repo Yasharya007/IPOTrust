@@ -23,8 +23,8 @@ const ipoSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "contractDeployed", "seedsSubmitted", "lotteryCompleted"],
-    default: "pending",
+    enum: ["contractDeployed", "seedsSubmitted", "lotteryCompleted"],
+    default: "contractDeployed",
   },
   applicantDematHashes: {
     type: [String],

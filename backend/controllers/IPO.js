@@ -26,3 +26,25 @@ export const createIpo = async (req, res) => {
     return res.status(500).json({ message: "Server error while creating IPO" });
   }
 };
+
+export const getAllIpos = async (req, res) => {
+  try {
+    const allIpos = await Ipo.find().sort({ createdAt: -1 });
+    res.status(200).json(allIpos);
+  } catch (error) {
+    console.error("Error fetching IPOs:", error);
+    res.status(500).json({ message: "Server error while fetching IPOs" });
+  }
+};
+
+export const getIpoById = async (req, res) => {
+  try {
+    // cout<<"Hello";
+    const { id } = req.params;
+    const ipo = await Ipo.findById(id);
+    if (!ipo) return res.status(404).json({ message: "IPO not found" });
+    res.json(ipo);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching IPO", error });
+  }
+};
