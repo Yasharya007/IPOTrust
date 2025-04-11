@@ -40,6 +40,12 @@ contract IPOLottery {
     function addHashedApplicant(bytes32 hashedDematId) external onlyRegistrar lotteryNotDone {
         applicantHashes.push(hashedDematId);
     }
+    // Add multiple hashed DMAT ID
+    function addMultipleHashedApplicants(bytes32[] calldata hashedDematIds) external onlyRegistrar lotteryNotDone {
+    for (uint256 i = 0; i < hashedDematIds.length; i++) {
+        applicantHashes.push(hashedDematIds[i]);
+        }
+    }
 
     // Both parties submit seeds
     function submitRegistrarSeed(uint256 _seed) external onlyRegistrar lotteryNotDone {
