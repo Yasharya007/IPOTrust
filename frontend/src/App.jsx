@@ -6,13 +6,11 @@ function App() {
 
   return (
     <>
-    <div id="origin" className="flex">
       <Routes>
         <Route path="/" element={<IPOList/>}/>
         <Route path="/create" element={<CreateIPO/>}/>
         <Route path="/IPO" element={<IPO/>}/>
       </Routes>
-    </div>
     </>
   )
 }

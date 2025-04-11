@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import IPOLotteryJson from "../../../hardhat/artifacts/contracts/IPOLottery.sol/IPOLottery.json";
+import { setSelectedIpo } from "../redux/selectedIpoSlice.js";
+import { useNavigate } from "react-router-dom";
 
 const CreateIPO = () => {
   const [form, setForm] = useState({
@@ -9,7 +12,8 @@ const CreateIPO = () => {
     winnerCount: "",
     sebiAddress: "",
   });
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
@@ -59,6 +63,9 @@ const CreateIPO = () => {
           if (response.status === 201) {
             setStatus("IPO created successfully!");
             setForm({ companyName: "", winnerCount: "", sebiAddress: "" });
+            dispatch(setSelectedIpo(response.data.ipo._id));
+            navigate("/IPO");
+            // console.log(response);
           } else {
             setStatus("Failed to save IPO on backend.");
           }

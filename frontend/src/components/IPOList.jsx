@@ -29,9 +29,15 @@ const IPOList = () => {
   }, []);
 
   if (loading) return <div>Loading IPOs...</div>;
-  if (ipos.length === 0) return <div>No ongoing IPOs found.</div>;
+  if (ipos.length === 0) return <div>No ongoing IPOs found. <button
+  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 mx-5 rounded-2xl shadow-md transition duration-300 ease-in-out"
+  onClick={() => navigate("/create")}
+>
+  Create New IPO
+</button></div>;
 
   return (
+    <>
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Ongoing IPOs</h2>
       <div className="grid grid-cols-1 gap-4">
@@ -50,6 +56,13 @@ const IPOList = () => {
         ))}
       </div>
     </div>
+    <div>
+    <button
+      className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 mx-5 rounded-2xl shadow-md transition duration-300 ease-in-out" onClick={() => navigate("/create")}>
+      Create New IPO
+    </button>
+    </div>
+    </>
   );
 };
 
