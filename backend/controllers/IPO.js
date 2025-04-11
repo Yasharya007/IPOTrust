@@ -64,3 +64,26 @@ export const addApplicants = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const saveWinners = async (req, res) => {
+  try {
+    const { contractAddress, winnerHashes } = req.body;
+    console.log(winnerHashes);
+    const ipo = await Ipo.findOne({ contractAddress });
+    if (!ipo) return res.status(404).json({ message: "IPO not found" });
+
+    const resolvedWinners = winnerHashes.map((hash) => {
+      const mapping = ipo.applicantDematMap.find((entry) => entry.hash === hash);
+      return mapping ? { hash, dematId: mapping.dematId } : null;
+    }).filter(Boolean); // filter out unmatched
+
+    ipo.winners = resolvedWinners;
+    ipo.status = "lotteryCompleted";
+    await ipo.save();
+
+    res.status(200).json({ message: "Winners saved successfully", winners: resolvedWinners });
+  } catch (error) {
+    console.error("Error saving winners:", error);
+    res.status(500).json({ message: "Server error while saving winners" });
+  }
+};
