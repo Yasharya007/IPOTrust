@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import UploadApplicants from "./UploadApplicants.jsx";
+import SubmitSeeds from "./SubmitSeeds.jsx";
 import axios from "axios";
 
 const IPO = () => {
@@ -38,6 +39,7 @@ const IPO = () => {
       <p><strong>Status:</strong> {ipo.status}</p>
     </div>
     <UploadApplicants contractAddress={ipo.contractAddress} />
+    <SubmitSeeds contractAddress={ipo.contractAddress}/>
     </>
   );
 };
