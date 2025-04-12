@@ -61,6 +61,10 @@ const IPOList = () => {
       className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 mx-5 rounded-2xl shadow-md transition duration-300 ease-in-out" onClick={() => navigate("/create")}>
       Create New IPO
     </button>
+    <button
+      className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 mx-5 rounded-2xl shadow-md transition duration-300 ease-in-out" onClick={() => navigate("/check")}>
+      Check My Hash
+    </button>
     </div>
     </>
   );
