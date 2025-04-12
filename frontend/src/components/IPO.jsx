@@ -4,6 +4,7 @@ import UploadApplicants from "./UploadApplicants.jsx";
 import SubmitSeeds from "./SubmitSeeds.jsx";
 import RunLottery from "./RunLottery.jsx";
 import axios from "axios";
+import Papa from "papaparse";
 
 const IPO = () => {
   const ipoId = useSelector((state) => state.selectedIpo.ipoId);
@@ -24,6 +25,20 @@ const IPO = () => {
 
     if (ipoId) fetchIpoDetails();
   }, [ipoId]);
+  const handleDownloadCSV = () => {
+    if (!ipo?.winners?.length) return;
+  
+    const csv = Papa.unparse(ipo.winners); // uses [{ hash, dematId }]
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `${ipo.companyName}_winners.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
 
   if (loading) return <div>Loading IPO details...</div>;
   if (!ipo) return <div>IPO not found.</div>;
@@ -52,14 +67,21 @@ const IPO = () => {
 
       {ipo.winners?.length > 0 && (
         <div className="mt-4 ml-5">
-        <h3 className="text-lg font-semibold">Winners:</h3>
-        <ul className="list-disc list-inside text-sm text-gray-800">
-          {ipo.winners.map((hash, idx) => (
-            <li key={idx}>{hash.dematId}</li>
-          ))}
-        </ul>
-      </div>
-
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-lg font-semibold">Winners:</h3>
+            <button
+              onClick={handleDownloadCSV}
+              className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm"
+            >
+              Download CSV
+            </button>
+          </div>
+          <ul className="list-disc list-inside text-sm text-gray-800">
+            {ipo.winners.map((hash, idx) => (
+              <li key={idx}>{hash.dematId}</li>
+            ))}
+          </ul>
+        </div>
       )}
     </>
   );
