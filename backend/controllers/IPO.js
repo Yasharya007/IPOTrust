@@ -1,6 +1,6 @@
 import {Ipo} from "../models/IPO.js";
-
-
+import { exec } from "child_process";
+import { promisify } from "util";
 export const createIpo = async (req, res) => {
   try {
     const { companyName, winnerCount, registrar, sebi, contractAddress } = req.body;
@@ -68,7 +68,7 @@ export const addApplicants = async (req, res) => {
 export const saveWinners = async (req, res) => {
   try {
     const { contractAddress, winnerHashes } = req.body;
-    console.log(winnerHashes);
+    // console.log(winnerHashes);
     const ipo = await Ipo.findOne({ contractAddress });
     if (!ipo) return res.status(404).json({ message: "IPO not found" });
 
@@ -80,8 +80,16 @@ export const saveWinners = async (req, res) => {
     ipo.winners = resolvedWinners;
     ipo.status = "lotteryCompleted";
     await ipo.save();
-
-    res.status(200).json({ message: "Winners saved successfully", winners: resolvedWinners });
+    // Verifying it on etherscan to make variables public
+    const execAsync = promisify(exec);
+    const verifyCmd = `cd ../hardhat && npx hardhat verify --network sepolia ${contractAddress} ${ipo.winnerCount} ${ipo.sebi}`;
+    try {
+      await execAsync(verifyCmd);
+      // console.log("Verification success:", stdout);
+    } catch (err) {
+      console.error("Verification failed:", err);
+    }
+    res.status(200).json({ message: "Winners saved successfully and contract verified", winners: resolvedWinners });
   } catch (error) {
     console.error("Error saving winners:", error);
     res.status(500).json({ message: "Server error while saving winners" });
