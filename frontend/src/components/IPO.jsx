@@ -30,18 +30,37 @@ const IPO = () => {
 
   return (
     <>
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">IPO Details</h2>
-      <p><strong>Company:</strong> {ipo.companyName}</p>
-      <p><strong>Contract Address:</strong> {ipo.contractAddress}</p>
-      <p><strong>Winner Count:</strong> {ipo.winnerCount}</p>
-      <p><strong>Registrar:</strong> {ipo.registrar}</p>
-      <p><strong>SEBI:</strong> {ipo.sebi}</p>
-      <p><strong>Status:</strong> {ipo.status}</p>
-    </div>
-    <UploadApplicants contractAddress={ipo.contractAddress} />
-    <SubmitSeeds contractAddress={ipo.contractAddress}/>
-    <RunLottery contractAddress={ipo.contractAddress}/>
+      <div className="p-4">
+        <h2 className="text-xl font-bold mb-4">IPO Details</h2>
+        <p><strong>Company:</strong> {ipo.companyName}</p>
+        <p><strong>Contract Address:</strong> {ipo.contractAddress}</p>
+        <p><strong>Winner Count:</strong> {ipo.winnerCount}</p>
+        <p><strong>Registrar:</strong> {ipo.registrar}</p>
+        <p><strong>SEBI:</strong> {ipo.sebi}</p>
+        <p><strong>Status:</strong> {ipo.status}</p>
+      </div>
+
+      {ipo.applicantDematMap?.length === 0 && (
+        <UploadApplicants contractAddress={ipo.contractAddress} />
+      )}
+
+      <SubmitSeeds contractAddress={ipo.contractAddress} />
+
+      {ipo.winners?.length === 0 && (
+        <RunLottery contractAddress={ipo.contractAddress} />
+      )}
+
+      {ipo.winners?.length > 0 && (
+        <div className="mt-4 ml-5">
+        <h3 className="text-lg font-semibold">Winners:</h3>
+        <ul className="list-disc list-inside text-sm text-gray-800">
+          {ipo.winners.map((hash, idx) => (
+            <li key={idx}>{hash.dematId}</li>
+          ))}
+        </ul>
+      </div>
+
+      )}
     </>
   );
 };
