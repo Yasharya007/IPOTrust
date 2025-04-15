@@ -50,7 +50,9 @@ const IPO = () => {
         <p><strong>Company:</strong> {ipo.companyName}</p>
         <p><strong>Contract Address:</strong> {ipo.contractAddress}</p>
         <p><strong>Winner Count:</strong> {ipo.winnerCount}</p>
-        <p><strong>Registrar:</strong> {ipo.registrar}</p>
+        <p><strong>Primary Registrar:</strong> {ipo.primaryRegistrar}</p>
+        <p><strong>Witness Registrar 1:</strong> {ipo.extraRegistrar1}</p>
+        <p><strong>Witness Registrar 2:</strong> {ipo.extraRegistrar2}</p>
         <p><strong>SEBI:</strong> {ipo.sebi}</p>
         <p><strong>Status:</strong> {ipo.status}</p>
       </div>
@@ -58,9 +60,9 @@ const IPO = () => {
       {ipo.applicantDematMap?.length === 0 && (
         <UploadApplicants contractAddress={ipo.contractAddress} />
       )}
-
-      <SubmitSeeds contractAddress={ipo.contractAddress} />
-
+      {ipo.winners?.length === 0 && (
+        <SubmitSeeds contractAddress={ipo.contractAddress} />
+      )}
       {ipo.winners?.length === 0 && (
         <RunLottery contractAddress={ipo.contractAddress} />
       )}

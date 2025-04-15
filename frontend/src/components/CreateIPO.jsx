@@ -10,8 +10,12 @@ const CreateIPO = () => {
   const [form, setForm] = useState({
     companyName: "",
     winnerCount: "",
-    sebiAddress: "",
+    primaryRegistrar: "",
+    extraRegistrar1: "",
+    extraRegistrar2: "",
+    sebi: "",
   });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [status, setStatus] = useState("");
@@ -40,40 +44,48 @@ const CreateIPO = () => {
       // 3. Deploy contract
       const contract = await ContractFactory.deploy(
         parseInt(form.winnerCount),
-        form.sebiAddress
+        form.primaryRegistrar,
+        form.extraRegistrar1,
+        form.extraRegistrar2
       );
 
       await contract.waitForDeployment();
-
       const contractAddress = await contract.getAddress();
       setStatus(`Contract deployed at ${contractAddress}`);
 
       // 4. Send IPO details to backend
-        setStatus("Saving IPO in backend...");
+      setStatus("Saving IPO in backend...");
 
-        try {
-          const response = await axios.post("http://localhost:8000/api/ipo/create", {
-            companyName: form.companyName,
-            winnerCount: parseInt(form.winnerCount),
-            registrar: await signer.getAddress(),
-            sebi: form.sebiAddress,
-            contractAddress,
+      try {
+        const response = await axios.post("http://localhost:8000/api/ipo/create", {
+          companyName: form.companyName,
+          winnerCount: parseInt(form.winnerCount),
+          primaryRegistrar: form.primaryRegistrar,
+          extraRegistrar1: form.extraRegistrar1,
+          extraRegistrar2: form.extraRegistrar2,
+          sebi: await signer.getAddress(),
+          contractAddress,
+        });
+
+        if (response.status === 201) {
+          setStatus("IPO created successfully!");
+          setForm({
+            companyName: "",
+            winnerCount: "",
+            primaryRegistrar: "",
+            extraRegistrar1: "",
+            extraRegistrar2: "",
+            sebi: "",
           });
-      
-          if (response.status === 201) {
-            setStatus("IPO created successfully!");
-            setForm({ companyName: "", winnerCount: "", sebiAddress: "" });
-            dispatch(setSelectedIpo(response.data.ipo._id));
-            navigate("/IPO");
-            // console.log(response);
-          } else {
-            setStatus("Failed to save IPO on backend.");
-          }
-        } catch (error) {
-          console.error("Error saving IPO:", error);
-          setStatus("Error saving IPO on backend.");
+          dispatch(setSelectedIpo(response.data.ipo._id));
+          navigate("/IPO");
+        } else {
+          setStatus("Failed to save IPO on backend.");
         }
-
+      } catch (error) {
+        console.error("Error saving IPO:", error);
+        setStatus("Error saving IPO on backend.");
+      }
     } catch (err) {
       console.error(err);
       setStatus("Error occurred while creating IPO.");
@@ -105,9 +117,27 @@ const CreateIPO = () => {
 
         <input
           type="text"
-          name="sebiAddress"
-          placeholder="SEBI Wallet Address"
-          value={form.sebiAddress}
+          name="primaryRegistrar"
+          placeholder="Primary Registrar Address"
+          value={form.primaryRegistrar}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border rounded-lg"
+        />
+
+        <input
+          type="text"
+          name="extraRegistrar1"
+          placeholder="Extra Registrar 1 Address"
+          value={form.extraRegistrar1}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border rounded-lg"
+        />
+
+        <input
+          type="text"
+          name="extraRegistrar2"
+          placeholder="Extra Registrar 2 Address"
+          value={form.extraRegistrar2}
           onChange={handleChange}
           className="w-full px-4 py-2 border rounded-lg"
         />

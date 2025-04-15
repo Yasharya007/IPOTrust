@@ -3,17 +3,19 @@ import { exec } from "child_process";
 import { promisify } from "util";
 export const createIpo = async (req, res) => {
   try {
-    const { companyName, winnerCount, registrar, sebi, contractAddress } = req.body;
+    const { companyName, winnerCount, primaryRegistrar,extraRegistrar1,extraRegistrar2, sebi, contractAddress } = req.body;
 
     // Basic validation
-    if (!companyName || !winnerCount || !registrar || !sebi || !contractAddress) {
+    if (!companyName || !winnerCount || !primaryRegistrar || !extraRegistrar1 || !extraRegistrar2 || !sebi || !contractAddress) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
     const newIpo = new Ipo({
       companyName,
       winnerCount,
-      registrar,
+      primaryRegistrar,
+      extraRegistrar1,
+      extraRegistrar2,
       sebi,
       contractAddress,
     });
@@ -82,7 +84,7 @@ export const saveWinners = async (req, res) => {
     await ipo.save();
     // Verifying it on etherscan to make variables public
     const execAsync = promisify(exec);
-    const verifyCmd = `cd ../hardhat && npx hardhat verify --network sepolia ${contractAddress} ${ipo.winnerCount} ${ipo.sebi}`;
+    const verifyCmd = `cd ../hardhat && npx hardhat verify --network sepolia ${contractAddress} ${ipo.winnerCount} ${ipo.primaryRegistrar} ${ipo.extraRegistrar1} ${ipo.extraRegistrar2}`;
     try {
       await execAsync(verifyCmd);
       // console.log("Verification success:", stdout);

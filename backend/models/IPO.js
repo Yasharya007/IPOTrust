@@ -9,7 +9,15 @@ const ipoSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  registrar: {
+  primaryRegistrar: {
+    type: String,
+    required: true, // wallet address
+  },
+  extraRegistrar1: {
+    type: String,
+    required: true, // wallet address
+  },
+  extraRegistrar2: {
     type: String,
     required: true, // wallet address
   },
@@ -23,7 +31,7 @@ const ipoSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["contractDeployed", "seedsSubmitted", "lotteryCompleted"],
+    enum: ["contractDeployed", "lotteryCompleted"],
     default: "contractDeployed",
   },
   applicantDematMap: [{
