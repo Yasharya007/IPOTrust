@@ -2,32 +2,46 @@
 pragma solidity ^0.8.20;
 
 contract IPOLottery {
-    address public registrar;
     address public sebi;
+    address public primaryRegistrar;
+    address public extraRegistrar1;
+    address public extraRegistrar2;
 
     bytes32[] private applicantHashes;
     bytes32[] private winnerHashes;
 
-    uint256 private registrarSeed;
-    uint256 private sebiSeed;
+    mapping(address => uint256) private submittedSeeds;
     uint256 public winnerCount;
 
     bool public lotteryCompleted;
 
-    constructor(uint256 _winnerCount, address _sebi) {
-        registrar = msg.sender;
-        sebi = _sebi;
+    constructor(
+        uint256 _winnerCount,
+        address _primaryRegistrar,
+        address _extraRegistrar1,
+        address _extraRegistrar2
+    ) {
+        sebi = msg.sender;
+        primaryRegistrar = _primaryRegistrar;
+        extraRegistrar1 = _extraRegistrar1;
+        extraRegistrar2 = _extraRegistrar2;
         winnerCount = _winnerCount;
     }
 
     // Modifiers
-    modifier onlyRegistrar() {
-        require(msg.sender == registrar, "Only registrar allowed");
+    modifier onlyPrimaryRegistrar() {
+        require(msg.sender == primaryRegistrar, "Only primary registrar allowed");
         _;
     }
 
-    modifier onlySEBI() {
-        require(msg.sender == sebi, "Only SEBI allowed");
+    modifier onlySeedSubmitter() {
+        require(
+            msg.sender == sebi ||
+            msg.sender == extraRegistrar1 ||
+            msg.sender == extraRegistrar2 ||
+            msg.sender == primaryRegistrar,
+            "Not authorized to submit seed"
+        );
         _;
     }
 
@@ -36,40 +50,50 @@ contract IPOLottery {
         _;
     }
 
-    // Add a hashed DMAT ID (applicant)
-    function addHashedApplicant(bytes32 hashedDematId) external onlyRegistrar lotteryNotDone {
+    // Applicant inputs
+    function addHashedApplicant(bytes32 hashedDematId) external onlyPrimaryRegistrar lotteryNotDone {
         applicantHashes.push(hashedDematId);
     }
-    // Add multiple hashed DMAT ID
-    function addMultipleHashedApplicants(bytes32[] calldata hashedDematIds) external onlyRegistrar lotteryNotDone {
-    for (uint256 i = 0; i < hashedDematIds.length; i++) {
-        applicantHashes.push(hashedDematIds[i]);
+
+    function addMultipleHashedApplicants(bytes32[] calldata hashedDematIds) external onlyPrimaryRegistrar lotteryNotDone {
+        for (uint256 i = 0; i < hashedDematIds.length; i++) {
+            applicantHashes.push(hashedDematIds[i]);
         }
     }
 
-    // Both parties submit seeds
-    function submitRegistrarSeed(uint256 _seed) external onlyRegistrar lotteryNotDone {
-        registrarSeed = _seed;
+    // Seed input
+    function submitSeed(uint256 _seed) external onlySeedSubmitter lotteryNotDone {
+        submittedSeeds[msg.sender] = _seed;
     }
 
-    function submitSEBISeed(uint256 _seed) external onlySEBI lotteryNotDone {
-        sebiSeed = _seed;
-    }
-
-    // Run the lottery (ONLY SEBI to ensure regulatory control)
-    function runLottery() external onlySEBI lotteryNotDone {
-        require(registrarSeed != 0 && sebiSeed != 0, "Both seeds must be submitted");
+    // Run lottery
+    function runLottery() external onlyPrimaryRegistrar lotteryNotDone {
+        require(
+            submittedSeeds[sebi] != 0 &&
+            submittedSeeds[primaryRegistrar] != 0 &&
+            submittedSeeds[extraRegistrar1] != 0 &&
+            submittedSeeds[extraRegistrar2] != 0,
+            "All 4 seeds must be submitted"
+        );
 
         uint256 finalSeed = uint256(
-            keccak256(abi.encodePacked(registrarSeed, sebiSeed, block.timestamp))
+            keccak256(
+                abi.encodePacked(
+                    submittedSeeds[sebi],
+                    submittedSeeds[primaryRegistrar],
+                    submittedSeeds[extraRegistrar1],
+                    submittedSeeds[extraRegistrar2],
+                    block.timestamp
+                )
+            )
         );
 
         uint256 totalApplicants = applicantHashes.length;
         require(winnerCount <= totalApplicants, "Not enough applicants");
 
         bool[] memory selected = new bool[](totalApplicants);
-
         uint256 selectedCount = 0;
+
         while (selectedCount < winnerCount) {
             uint256 index = finalSeed % totalApplicants;
 
@@ -85,7 +109,7 @@ contract IPOLottery {
         lotteryCompleted = true;
     }
 
-    // Public read-only views
+    // Views
     function getAllApplicantHashes() external view returns (bytes32[] memory) {
         return applicantHashes;
     }
