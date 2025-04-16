@@ -20,7 +20,7 @@ const RunLottery = ({ contractAddress }) => {
 
       setStatus("Fetching winner hashes...");
       const winners = await contract.getWinnerHashes();
-      setWinnerHashes(winners);
+      // setWinnerHashes(winners);
       setStatus("Lottery completed successfully!");
 
       axios.post("http://localhost:8000/api/ipo/saveWinners", {

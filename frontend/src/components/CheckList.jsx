@@ -53,7 +53,7 @@ function CheckList() {
     <button onClick={connectWallet} className="bg-blue-600 mx-5 my-5 text-white px-3 py-1 rounded">
       {walletAddress ? `Connected: ${walletAddress.slice(0, 6)}...` : "Connect Wallet"}
     </button>
-    {ipo.winners?.length > 0 &&(walletAddress?.toLowerCase() === ipo.primaryRegistrar?.toLowerCase()) && (
+    {(ipo.winners?.length > 0 &&(walletAddress?.toLowerCase() === ipo.primaryRegistrar?.toLowerCase() || walletAddress?.toLowerCase() === ipo.sebi?.toLowerCase()))? (
         <div className="mt-4 mx-5">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold">Winners:</h3>
@@ -70,6 +70,10 @@ function CheckList() {
             ))}
           </ul>
         </div>
+      ):(
+        <h2 className="text-center text-2xl">
+            Connect with SEBI wallet or Primary Registrar wallet to see result.
+        </h2>
       )}
     </>
   )

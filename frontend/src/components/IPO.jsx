@@ -35,7 +35,24 @@ const IPO = () => {
       <div className="p-4">
         <h2 className="text-xl font-bold mb-4">IPO Details</h2>
         <p><strong>Company:</strong> {ipo.companyName}</p>
-        <p><strong>Contract Address:</strong> {ipo.contractAddress}</p>
+        {/* <p><strong>Contract Address:</strong><a href={`https://sepolia.etherscan.io/address/${ipo.contractAddress}`}>{ipo.contractAddress}</a> </p> */}
+        <p className="flex items-center gap-2">
+  <strong>Contract Address:</strong>
+  <a
+    href={`https://sepolia.etherscan.io/address/${ipo.contractAddress}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-blue-600 flex items-center gap-1"
+  >
+    {ipo.contractAddress}
+    <img
+      src="https://etherscan.io/images/brandassets/etherscan-logo-circle.svg"
+      alt="Etherscan"
+      className="w-4 h-4 inline-block"
+    />
+  </a>
+</p>
+
         <p><strong>Winner Count:</strong> {ipo.winnerCount}</p>
         <p><strong>Primary Registrar:</strong> {ipo.primaryRegistrar}</p>
         <p><strong>Witness Registrar 1:</strong> {ipo.extraRegistrar1}</p>
