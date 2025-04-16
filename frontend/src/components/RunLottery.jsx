@@ -2,11 +2,11 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
 import IPOLottery from "../../../hardhat/artifacts/contracts/IPOLottery.sol/IPOLottery.json";
-
+import { useNavigate } from "react-router-dom";
 const RunLottery = ({ contractAddress }) => {
   const [status, setStatus] = useState("");
-  const [winnerHashes, setWinnerHashes] = useState([]);
-
+  // const [winnerHashes, setWinnerHashes] = useState([]);
+  const navigate=useNavigate();
   const handleRunLottery = async () => {
     try {
       setStatus("Connecting wallet...");
@@ -29,6 +29,7 @@ const RunLottery = ({ contractAddress }) => {
       })
       .then((res) => {
         console.log("Saved winners to backend:", res.data.winners);
+        navigate("/result");
       })
       .catch((err) => {
         console.error("Failed to save winners:", err);
@@ -50,7 +51,7 @@ const RunLottery = ({ contractAddress }) => {
       </button>
       <p className="text-sm text-gray-700">{status}</p>
 
-      {winnerHashes.length > 0 && (
+      {/* {winnerHashes.length > 0 && (
         <div className="mt-4">
           <h3 className="text-lg font-semibold">Winner Hashes:</h3>
           <ul className="list-disc list-inside text-sm text-gray-800">
@@ -59,7 +60,7 @@ const RunLottery = ({ contractAddress }) => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
