@@ -67,22 +67,32 @@ const UploadApplicants = ({ contractAddress }) => {
   };
 
   return (
-    <div className="p-4 border rounded-xl bg-white shadow-md">
-      <h2 className="text-lg font-bold mb-2">Upload Demat ID CSV</h2>
-      <input
-        type="file"
-        accept=".csv"
-        onChange={handleFileChange}
-        className="mb-2"
-      />
-      <button
-        onClick={handleUpload}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        Upload
-      </button>
-      <p className="mt-2 text-sm text-gray-600">{status}</p>
-    </div>
+    <div className="p-6 border rounded-2xl bg-white shadow-lg max-w-md mx-auto">
+  <h2 className="text-xl font-semibold mb-4 text-gray-800 text-center">Upload Demat ID CSV</h2>
+
+  <label className="block w-full cursor-pointer bg-gray-50 border-2 border-dashed border-gray-300 hover:border-blue-400 text-gray-500 text-sm rounded-lg px-4 py-10 text-center transition-all duration-200">
+    <input
+      type="file"
+      accept=".csv"
+      onChange={handleFileChange}
+      className="hidden"
+    />
+    <span className="block font-medium">Click to upload or drag and drop</span>
+    <span className="block text-xs mt-1 text-gray-400">Only .csv files accepted</span>
+  </label>
+
+  <button
+    onClick={handleUpload}
+    className="w-full mt-6 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+  >
+    Upload
+  </button>
+
+  {status && (
+    <p className="mt-3 text-sm text-center text-gray-600">{status}</p>
+  )}
+</div>
+
   );
 };
 

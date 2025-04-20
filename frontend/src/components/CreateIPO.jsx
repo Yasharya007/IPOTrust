@@ -32,6 +32,16 @@ const CreateIPO = () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
+      // Check if it is only sebi
+      const connectedAddress = (await signer.getAddress()).toLowerCase();
+
+      const sebiAddress = "0xadE9B0BD35243bf5065d802093A4e1fB7C92Af3a".toLowerCase();// SEBI adress that one is allowed
+  
+      if (connectedAddress !== sebiAddress) {
+        setStatus("Access denied: only SEBI can create IPOs.");
+        return;
+      }
+  
       setStatus("Deploying contract...");
 
       // 2. Prepare Contract Factory
