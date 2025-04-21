@@ -6,6 +6,11 @@ import IPOLotteryJson from "../../../hardhat/artifacts/contracts/IPOLottery.sol/
 import { setSelectedIpo } from "../redux/selectedIpoSlice.js";
 import { useNavigate } from "react-router-dom";
 
+
+// 
+import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon } from '@heroicons/react/16/solid'
+
 const CreateIPO = () => {
   const [form, setForm] = useState({
     companyName: "",
@@ -103,65 +108,122 @@ const CreateIPO = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
-      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md space-y-4">
-        <h2 className="text-2xl font-bold text-center">Create New IPO</h2>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleCreateIPO();
+      }}
+      className="max-w-4xl mx-auto px-6 py-12"
+    >
+      <div className="space-y-12 sm:space-y-16">
+        <div>
+          <h2 className="text-6xl font-semibold text-gray-900">Create New IPO</h2>
+          <p className="mt-1 max-w-2xl text-sm text-gray-600">
+            This information will be shared with SEBI so be careful what you share.
+          </p>
 
-        <input
-          type="text"
-          name="companyName"
-          placeholder="Company Name"
-          value={form.companyName}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
-        />
+          <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+              <label htmlFor="companyName" className="block text-sm font-medium text-gray-900 sm:pt-1.5">
+                Company Name
+              </label>
+              <div className="mt-2 sm:col-span-2 sm:mt-0">
+                <input
+                  id="companyName"
+                  name="companyName"
+                  type="text"
+                  value={form.companyName}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:max-w-xs sm:text-sm"
+                />
+              </div>
+            </div>
 
-        <input
-          type="number"
-          name="winnerCount"
-          placeholder="Number of Winners"
-          value={form.winnerCount}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
-        />
+            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+              <label htmlFor="winnerCount" className="block text-sm font-medium text-gray-900 sm:pt-1.5">
+                Number of Winners
+              </label>
+              <div className="mt-2 sm:col-span-2 sm:mt-0">
+                <input
+                  id="winnerCount"
+                  name="winnerCount"
+                  type="number"
+                  value={form.winnerCount}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:max-w-xs sm:text-sm"
+                />
+              </div>
+            </div>
 
-        <input
-          type="text"
-          name="primaryRegistrar"
-          placeholder="Primary Registrar Address"
-          value={form.primaryRegistrar}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
-        />
+            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+              <label htmlFor="primaryRegistrar" className="block text-sm font-medium text-gray-900 sm:pt-1.5">
+                Primary Registrar Address
+              </label>
+              <div className="mt-2 sm:col-span-2 sm:mt-0">
+                <input
+                  id="primaryRegistrar"
+                  name="primaryRegistrar"
+                  type="text"
+                  value={form.primaryRegistrar}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:max-w-md sm:text-sm"
+                />
+              </div>
+            </div>
 
-        <input
-          type="text"
-          name="extraRegistrar1"
-          placeholder="Extra Registrar 1 Address"
-          value={form.extraRegistrar1}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
-        />
+            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+              <label htmlFor="extraRegistrar1" className="block text-sm font-medium text-gray-900 sm:pt-1.5">
+                Extra Registrar 1 Address
+              </label>
+              <div className="mt-2 sm:col-span-2 sm:mt-0">
+                <input
+                  id="extraRegistrar1"
+                  name="extraRegistrar1"
+                  type="text"
+                  value={form.extraRegistrar1}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:max-w-xl sm:text-sm"
+                />
+              </div>
+            </div>
 
-        <input
-          type="text"
-          name="extraRegistrar2"
-          placeholder="Extra Registrar 2 Address"
-          value={form.extraRegistrar2}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
-        />
-
-        <button
-          onClick={handleCreateIPO}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg"
-        >
-          Create IPO Lottery
-        </button>
-
-        {status && <p className="text-sm text-center text-gray-600">{status}</p>}
+            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+              <label htmlFor="extraRegistrar2" className="block text-sm font-medium text-gray-900 sm:pt-1.5">
+                Extra Registrar 2 Address
+              </label>
+              <div className="mt-2 sm:col-span-2 sm:mt-0">
+                <input
+                  id="extraRegistrar2"
+                  name="extraRegistrar2"
+                  type="text"
+                  value={form.extraRegistrar2}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:max-w-xl sm:text-sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div className="mt-6 flex items-center justify-end gap-x-6">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="text-sm font-semibold text-gray-900"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Save
+        </button>
+      </div>
+
+      {status && <p className="text-sm text-center text-gray-600 mt-4">{status}</p>}
+    </form>
   );
 };
 
