@@ -119,7 +119,7 @@ const CreateIPO = () => {
         <div>
           <h2 className="text-6xl font-semibold text-gray-900">Create New IPO</h2>
           <p className="mt-1 max-w-2xl text-sm text-gray-600">
-            This information will be shared with SEBI so be careful what you share.
+            Use Your Official Etherium Address to Create Contract
           </p>
 
           <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">

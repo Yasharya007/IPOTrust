@@ -50,64 +50,70 @@ contract IPOLottery {
         _;
     }
 
-    // Applicant inputs
-    function addHashedApplicant(bytes32 hashedDematId) external onlyPrimaryRegistrar lotteryNotDone {
-        applicantHashes.push(hashedDematId);
+    modifier onlyIfNoApplicants() {
+        require(applicantHashes.length == 0, "Applicants already added");
+        _;
     }
 
-    function addMultipleHashedApplicants(bytes32[] calldata hashedDematIds) external onlyPrimaryRegistrar lotteryNotDone {
+    modifier onlyIfApplicantsExist() {
+        require(applicantHashes.length > 0, "No applicants added yet");
+        _;
+    }
+
+    function addMultipleHashedApplicants(bytes32[] calldata hashedDematIds)external onlyPrimaryRegistrar lotteryNotDone onlyIfNoApplicants{
         for (uint256 i = 0; i < hashedDematIds.length; i++) {
             applicantHashes.push(hashedDematIds[i]);
         }
     }
 
-    // Seed input
-    function submitSeed(uint256 _seed) external onlySeedSubmitter lotteryNotDone {
+    function submitSeed(uint256 _seed)external onlySeedSubmitter lotteryNotDone onlyIfApplicantsExist {
         submittedSeeds[msg.sender] = _seed;
     }
 
-    // Run lottery
     function runLottery() external onlyPrimaryRegistrar lotteryNotDone {
-        require(
-            submittedSeeds[sebi] != 0 &&
-            submittedSeeds[primaryRegistrar] != 0 &&
-            submittedSeeds[extraRegistrar1] != 0 &&
-            submittedSeeds[extraRegistrar2] != 0,
-            "All 4 seeds must be submitted"
-        );
+    require(
+        submittedSeeds[sebi] != 0 &&
+        submittedSeeds[primaryRegistrar] != 0 &&
+        submittedSeeds[extraRegistrar1] != 0 &&
+        submittedSeeds[extraRegistrar2] != 0,
+        "All 4 seeds must be submitted"
+    );
 
-        uint256 finalSeed = uint256(
-            keccak256(
-                abi.encodePacked(
-                    submittedSeeds[sebi],
-                    submittedSeeds[primaryRegistrar],
-                    submittedSeeds[extraRegistrar1],
-                    submittedSeeds[extraRegistrar2],
-                    block.timestamp
-                )
+    uint256 finalSeed = uint256(
+        keccak256(
+            abi.encodePacked(
+                submittedSeeds[sebi],
+                submittedSeeds[primaryRegistrar],
+                submittedSeeds[extraRegistrar1],
+                submittedSeeds[extraRegistrar2],
+                block.timestamp
             )
-        );
+        )
+    );
 
-        uint256 totalApplicants = applicantHashes.length;
-        require(winnerCount <= totalApplicants, "Not enough applicants");
+    uint256 totalApplicants = applicantHashes.length;
+    require(winnerCount <= totalApplicants, "Not enough applicants");
 
-        bool[] memory selected = new bool[](totalApplicants);
-        uint256 selectedCount = 0;
-
-        while (selectedCount < winnerCount) {
-            uint256 index = finalSeed % totalApplicants;
-
-            if (!selected[index]) {
-                winnerHashes.push(applicantHashes[index]);
-                selected[index] = true;
-                selectedCount++;
-            }
-
-            finalSeed = uint256(keccak256(abi.encodePacked(finalSeed)));
-        }
-
-        lotteryCompleted = true;
+    // Create a copy of the applicant list
+    bytes32[] memory tempApplicants = new bytes32[](totalApplicants);
+    for (uint256 i = 0; i < totalApplicants; i++) {
+        tempApplicants[i] = applicantHashes[i];
     }
+    for (uint256 i = 0; i < winnerCount; i++) {
+        uint256 index = finalSeed % tempApplicants.length;
+        winnerHashes.push(tempApplicants[index]);
+        for (uint256 j = index; j < tempApplicants.length - 1; j++) {
+            tempApplicants[j] = tempApplicants[j + 1];
+        }
+        // pop last element
+        assembly {
+            mstore(tempApplicants, sub(mload(tempApplicants), 1))
+        }
+        // Seed Updation
+        finalSeed = uint256(keccak256(abi.encodePacked(finalSeed)));
+    }
+    lotteryCompleted = true;
+}
 
     // Views
     function getAllApplicantHashes() external view returns (bytes32[] memory) {
