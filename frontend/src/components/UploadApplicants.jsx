@@ -67,32 +67,47 @@ const UploadApplicants = ({ contractAddress }) => {
   };
 
   return (
-    <div className="p-6 border rounded-2xl bg-white shadow-lg max-w-md mx-auto">
-  <h2 className="text-xl font-semibold mb-4 text-gray-800 text-center">Upload Demat ID CSV</h2>
+    <div className="max-w-sm mx-auto rounded-2xl mb-4 bg-white ring-1 ring-gray-200 shadow-md">
+      <div className="p-6 border-b border-gray-100">
+        <h2 className="text-base font-semibold leading-6 text-gray-900">Upload Demat ID CSV</h2>
+        <p className="mt-1 text-sm text-gray-500">Ensure the file contains valid demat Id in column.</p>
 
-  <label className="block w-full cursor-pointer bg-gray-50 border-2 border-dashed border-gray-300 hover:border-blue-400 text-gray-500 text-sm rounded-lg px-4 py-10 text-center transition-all duration-200">
-    <input
-      type="file"
-      accept=".csv"
-      onChange={handleFileChange}
-      className="hidden"
-    />
-    <span className="block font-medium">Click to upload or drag and drop</span>
-    <span className="block text-xs mt-1 text-gray-400">Only .csv files accepted</span>
-  </label>
+        <label className="mt-4 flex items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-400 transition">
+          <input
+            type="file"
+            accept=".csv"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+          <div className="text-center text-gray-500 text-sm">
+            <p className="font-medium">Click to upload or drag & drop</p>
+            <p className="text-xs text-gray-400 mt-1">Only .csv files accepted</p>
+          </div>
+        </label>
 
-  <button
-    onClick={handleUpload}
-    className="w-full mt-6 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
-  >
-    Upload
-  </button>
+      </div>
 
-  {status && (
-    <p className="mt-3 text-sm text-center text-gray-600">{status}</p>
-  )}
-</div>
+      <div className="p-6">
+        <dl className="text-sm space-y-4 text-gray-600">
+          <div className="flex justify-between">
+            <dt>Status</dt>
+            <dd className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+              {status || "Idle"}
+            </dd>
+          </div>
 
+        <button
+          onClick={handleUpload}
+          className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+        >
+          Upload
+        </button>
+         
+        </dl>
+
+        
+      </div>
+    </div>
   );
 };
 

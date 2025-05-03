@@ -32,33 +32,57 @@ const IPO = () => {
 
   return (
     <>
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-4">IPO Details</h2>
-        <p><strong>Company:</strong> {ipo.companyName}</p>
-        {/* <p><strong>Contract Address:</strong><a href={`https://sepolia.etherscan.io/address/${ipo.contractAddress}`}>{ipo.contractAddress}</a> </p> */}
-        <p className="flex items-center gap-2">
-  <strong>Contract Address:</strong>
-  <a
-    href={`https://sepolia.etherscan.io/address/${ipo.contractAddress}`}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-blue-600 flex items-center gap-1"
-  >
-    {ipo.contractAddress}
-    <img
-      src="https://etherscan.io/images/brandassets/etherscan-logo-circle.svg"
-      alt="Etherscan"
-      className="w-4 h-4 inline-block"
-    />
-  </a>
-</p>
-
-        <p><strong>Winner Count:</strong> {ipo.winnerCount}</p>
-        <p><strong>Primary Registrar:</strong> {ipo.primaryRegistrar}</p>
-        <p><strong>Witness Registrar 1:</strong> {ipo.extraRegistrar1}</p>
-        <p><strong>Witness Registrar 2:</strong> {ipo.extraRegistrar2}</p>
-        <p><strong>SEBI:</strong> {ipo.sebi}</p>
-        <p><strong>Status:</strong> {ipo.status}</p>
+      <div className="mx-auto max-w-4xl rounded-xl bg-white px-6 py-10 shadow-md mt-4 mb-4 ring-1 ring-gray-200 sm:px-10">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">IPO Details</h2>
+        <dl className="grid grid-cols-1 gap-y-6 gap-x-8 text-sm sm:grid-cols-2">
+          <div>
+            <dt className="text-gray-500">Company</dt>
+            <dd className="text-gray-800 font-medium">{ipo.companyName}</dd>
+          </div>
+          
+          <div className="col-span-2">
+            <dt className="text-gray-500">Contract Address</dt>
+            <dd className="text-gray-800 font-medium flex items-center gap-2">
+              <a
+                href={`https://sepolia.etherscan.io/address/${ipo.contractAddress}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline flex items-center gap-1"
+              >
+                {ipo.contractAddress}
+                <img
+                  src="https://sepolia.etherscan.io/images/brandassets/etherscan-logo-circle.svg"
+                  alt="Etherscan"
+                  className="w-4 h-4"
+                />
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt className="text-gray-500">Primary Registrar</dt>
+            <dd className="text-gray-800 font-medium">{ipo.primaryRegistrar}</dd>
+          </div>
+          <div>
+            <dt className="text-gray-500">Witness Registrar 1</dt>
+            <dd className="text-gray-800 font-medium">{ipo.extraRegistrar1}</dd>
+          </div>
+          <div>
+            <dt className="text-gray-500">Witness Registrar 2</dt>
+            <dd className="text-gray-800 font-medium">{ipo.extraRegistrar2}</dd>
+          </div>
+          <div>
+            <dt className="text-gray-500">SEBI</dt>
+            <dd className="text-gray-800 font-medium">{ipo.sebi}</dd>
+          </div>
+          <div>
+            <dt className="text-gray-500">Winner Count</dt>
+            <dd className="text-gray-800 font-medium">{ipo.winnerCount}</dd>
+          </div>
+          <div>
+            <dt className="text-gray-500">Status</dt>
+            <dd className="text-gray-800 font-medium">{ipo.status}</dd>
+          </div>
+        </dl>
       </div>
 
       {ipo.applicantDematMap?.length === 0 && (
