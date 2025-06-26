@@ -33,7 +33,7 @@ const IPO = () => {
   return (
     <>
       <div className="mx-auto max-w-4xl rounded-xl bg-white px-6 py-10 shadow-md mt-4 mb-4 ring-1 ring-gray-200 sm:px-10">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">IPO Details</h2>
+        <h2 className="text-5xl font-bold text-gray-900 mb-6">IPO Details</h2>
         <dl className="grid grid-cols-1 gap-y-6 gap-x-8 text-sm sm:grid-cols-2">
           <div>
             <dt className="text-gray-500">Company</dt>
@@ -84,6 +84,7 @@ const IPO = () => {
           </div>
         </dl>
       </div>
+      <div className="divide-y py-2 px-9 divide-gray-200 overflow-hidden rounded-lg  shadow-xsm sm:grid sm:grid-cols-2 sm:gap-2px sm:divide-y-0">
 
       {ipo.applicantDematMap?.length === 0 && (
         <UploadApplicants contractAddress={ipo.contractAddress} />
@@ -91,18 +92,22 @@ const IPO = () => {
       {ipo.winners?.length === 0 && (
         <SubmitSeeds contractAddress={ipo.contractAddress} />
       )}
+</div>
       {ipo.winners?.length === 0 && (
         <RunLottery contractAddress={ipo.contractAddress} />
       )}
 
+<div className="max-w-6xl mx-auto px-16 flex justify-center">
+
       {ipo.winners?.length > 0 && (
         <button
         onClick={() => navigate("/result")}
-        className="bg-purple-600 text-white mx-5 px-4 py-2 rounded hover:bg-purple-700"
-      >
+        className="bg-purple-600 mx-auto text-white px-4 py-2 rounded hover:bg-purple-700"
+        >
         Check Result
       </button>
       )}
+      </div>
     </>
   );
 };

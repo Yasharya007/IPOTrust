@@ -44,7 +44,7 @@ const IPOList = () => {
 
   return (
     <>
-    <div className="p-4">
+    <div className="max-w-6xl mx-auto px-6 py-10">
       {/* <h2 className="text-xl font-bold mb-4">Ongoing IPOs</h2> */}
       <p className="max-w-2xl text-5xl mt-2 mb-8 font-semibold tracking-tight text-pretty text-gray-900 sm:text-6xl sm:text-balance">
       Ongoing IPOs
@@ -87,14 +87,22 @@ const IPOList = () => {
       </div>
     </div>
     <div>
-    <button
-      className="bg-green-500 hover:bg-green-600 mt-8 text-white font-semibold py-2 px-6 mx-5 rounded-2xl shadow-md transition duration-300 ease-in-out" onClick={() => navigate("/create")}>
-      Create New IPO
-    </button>
-    <button
-      className="bg-blue-500 hover:bg-blue-600 mt-8 text-white font-semibold py-2 px-6 mx-5 rounded-2xl shadow-md transition duration-300 ease-in-out" onClick={() => navigate("/check")}>
-      Check My Hash
-    </button>
+
+
+      <div className="max-w-6xl mx-auto px-6 flex justify-center gap-4">
+        <button
+          className="bg-green-500 hover:bg-green-600 mt-8 text-white font-semibold py-2 px-6 rounded-2xl shadow-md transition duration-300 ease-in-out"
+          onClick={() => navigate("/create")}
+        >
+          Create New IPO
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-600 mt-8 text-white font-semibold py-2 px-6 rounded-2xl shadow-md transition duration-300 ease-in-out"
+          onClick={() => navigate("/check")}
+        >
+          Check My Hash
+        </button>
+      </div>
     </div>
     </>
   );

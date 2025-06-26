@@ -11,8 +11,8 @@ export default function Example() {
             <div className="flex shrink-0 items-center">
               <img
                 alt="Our logo"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
+                src="https://firebasestorage.googleapis.com/v0/b/ducklingfit.appspot.com/o/IPO%20Trust%2FAdobe%20Express%20-%20file.png?alt=media&token=96b66faf-dc71-4a33-83ca-828664f8bed6"
+                className="h-12 w-auto"
               />
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">

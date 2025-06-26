@@ -40,7 +40,7 @@ const CreateIPO = () => {
       // Check if it is only sebi
       const connectedAddress = (await signer.getAddress()).toLowerCase();
 
-      const sebiAddress = "0xadE9B0BD35243bf5065d802093A4e1fB7C92Af3a".toLowerCase();// SEBI adress that one is allowed
+      const sebiAddress = "0xfeC0F708EE691cE2b5a15534CF682Aa9eBDC5C78".toLowerCase();// SEBI adress that one is allowed
   
       if (connectedAddress !== sebiAddress) {
         setStatus("Access denied: only SEBI can create IPOs.");
@@ -113,11 +113,11 @@ const CreateIPO = () => {
         e.preventDefault();
         handleCreateIPO();
       }}
-      className="max-w-4xl mx-auto px-6 py-12"
+      className="max-w-6xl mx-auto px-6 py-12"
     >
       <div className="space-y-12 sm:space-y-16">
         <div>
-          <h2 className="text-6xl font-semibold text-gray-900">Create New IPO</h2>
+          <h2 className="text-6xl font-semibold tracking-tight text-pretty text-gray-900">Create New IPO</h2>
           <p className="mt-1 max-w-2xl text-sm text-gray-600">
             This information will be shared with SEBI so be careful what you share.
           </p>

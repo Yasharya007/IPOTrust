@@ -2,7 +2,7 @@ import React from 'react'
 
 const navigation = {
     main: [
-      { name: 'Home', href: '/' },
+      { name: 'Home', href: '/LandingPage' },
     //   { name: 'Ongoing IPOs', href: '/IPOList' },
       { name: 'Research Paper', href: '/ResearchPaper' },
         { name: 'Contact Us', href: '/ContactUs' },

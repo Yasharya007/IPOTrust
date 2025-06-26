@@ -5,11 +5,12 @@ export default function Example() {
   const navigate = useNavigate();
 
   return (
+    <>
     <div className="relative isolate overflow-hidden bg-white">
       <svg
         aria-hidden="true"
         className="absolute inset-0 -z-10 size-full [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-gray-200"
-      >
+        >
         <defs>
           <pattern
             x="50%"
@@ -18,7 +19,7 @@ export default function Example() {
             width={200}
             height={200}
             patternUnits="userSpaceOnUse"
-          >
+            >
             <path d="M.5 200V.5H200" fill="none" />
           </pattern>
         </defs>
@@ -28,9 +29,9 @@ export default function Example() {
         <div className="mx-auto max-w-2xl lg:mx-0 lg:shrink-0 lg:pt-8">
           <img
             alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="h-11"
-          />
+            src="https://firebasestorage.googleapis.com/v0/b/ducklingfit.appspot.com/o/IPO%20Trust%2FAdobe%20Express%20-%20file.png?alt=media&token=96b66faf-dc71-4a33-83ca-828664f8bed6"
+            className="h-12"
+            />
           <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6">
               <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm/6 font-semibold text-indigo-600 ring-1 ring-indigo-600/10 ring-inset">
@@ -40,7 +41,7 @@ export default function Example() {
                 type="button"
                 onClick={() => navigate("/ResearchPaper")}
                 className="inline-flex items-center space-x-2 text-sm/6 font-medium text-gray-600"
-              >
+                >
                 <span>Research Paper</span>
                 <ChevronRightIcon aria-hidden="true" className="size-5 text-gray-400" />
               </button>
@@ -57,14 +58,14 @@ export default function Example() {
               type="button"
               onClick={() => navigate("/create")}
               className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
+              >
               Launch IPO Process
             </button>
             <button
               type="button"
               onClick={() => navigate("/about")}
               className="text-sm/6 font-semibold text-gray-900"
-            >
+              >
               How it works <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -74,15 +75,19 @@ export default function Example() {
             <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-gray-900/10 ring-inset lg:-m-4 lg:rounded-2xl lg:p-4">
               <img
                 alt="App screenshot"
-                src="https://firebasestorage.googleapis.com/v0/b/ducklingfit.appspot.com/o/IPO%20Trust%2FScreenshot%202025-04-21%20at%209.11.54%E2%80%AFPM.png?alt=media&token=1aace294-ac7c-4dbd-bb44-12d0d9af68f4"
+                src="https://firebasestorage.googleapis.com/v0/b/ducklingfit.appspot.com/o/IPO%20Trust%2FScreenshot%202025-04-23%20at%205.42.43%E2%80%AFPM.png?alt=media&token=dbbe9304-b3cb-40f9-aa4d-35757a865f7c"
                 width={2432}
                 height={1442}
                 className="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-900/10"
-              />
+                />
             </div>
           </div>
         </div>
       </div>
     </div>
+    {/* 
+     */}
+     
+    </>
   )
 }

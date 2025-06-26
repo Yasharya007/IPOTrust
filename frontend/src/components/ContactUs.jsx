@@ -11,7 +11,7 @@ const ContactUs = () => {
             <div>
               <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900">Get in touch</h2>
               <p className="mt-4 text-base/7 text-gray-600">
-                Quam nunc nunc eu sed. Sed rhoncus quis ultricies ac pellentesque.
+                We’re here to help you. Reach out with any questions or suggestions.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
@@ -56,7 +56,7 @@ const ContactUs = () => {
                     <dt className="sr-only">Email</dt>
                     <dd>
                       <a href="mailto:careers@example.com" className="font-semibold text-indigo-600">
-                        Jigyasa@example.com
+                        Jigyasu@example.com
                       </a>
                     </dd>
                   </div>
@@ -85,7 +85,7 @@ const ContactUs = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-10 py-16 lg:grid-cols-3">
+          {/* <div className="grid grid-cols-1 gap-10 py-16 lg:grid-cols-3">
             <div>
               <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900">Locations</h2>
               <p className="mt-4 text-base/7 text-gray-600">
@@ -115,14 +115,14 @@ const ContactUs = () => {
                 </address>
               </div>
               <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base/7 font-semibold text-gray-900">Chicago</h3>
+                <h3 className="text-base/7 font-semibold text-gray-900">MP</h3>
                 <address className="mt-3 space-y-1 text-sm/6 text-gray-600 not-italic">
-                  <p>726 Mavis Island</p>
-                  <p>Chicago, IL 60601</p>
+                  <p>726 </p>
+                  <p>huihui, IL 60601</p>
                 </address>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -41,27 +41,30 @@ const RunLottery = ({ contractAddress }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-md space-y-4">
+    <div className="max-w-6xl mx-auto px-6 flex justify-center py-10">
+
+    <div className="p-4 bg-white rounded-xl space-y-4">
       <h2 className="text-xl font-semibold">Run Lottery</h2>
       <button
         onClick={handleRunLottery}
         className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-      >
+        >
         Run Lottery
       </button>
       <p className="text-sm text-gray-700">{status}</p>
 
       {/* {winnerHashes.length > 0 && (
         <div className="mt-4">
-          <h3 className="text-lg font-semibold">Winner Hashes:</h3>
-          <ul className="list-disc list-inside text-sm text-gray-800">
-            {winnerHashes.map((hash, idx) => (
-              <li key={idx}>{hash}</li>
-            ))}
+        <h3 className="text-lg font-semibold">Winner Hashes:</h3>
+        <ul className="list-disc list-inside text-sm text-gray-800">
+        {winnerHashes.map((hash, idx) => (
+          <li key={idx}>{hash}</li>
+          ))}
           </ul>
-        </div>
-      )} */}
+          </div>
+          )} */}
     </div>
+          </div>
   );
 };
 

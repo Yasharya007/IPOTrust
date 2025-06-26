@@ -79,10 +79,19 @@ const UploadApplicants = ({ contractAddress }) => {
             onChange={handleFileChange}
             className="hidden"
           />
-          <div className="text-center text-gray-500 text-sm">
-            <p className="font-medium">Click to upload or drag & drop</p>
-            <p className="text-xs text-gray-400 mt-1">Only .csv files accepted</p>
-          </div>
+          {file ? (
+            <div className="text-center text-gray-600 text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto mb-1 h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16V4a2 2 0 012-2h7l5 5v9a2 2 0 01-2 2H6a2 2 0 01-2-2z" />
+              </svg>
+              <p className="text-sm font-medium truncate">{file.name}</p>
+            </div>
+          ) : (
+            <div className="text-center text-gray-500 text-sm">
+              <p className="font-medium">Click to upload or drag & drop</p>
+              <p className="text-xs text-gray-400 mt-1">Only .csv files accepted</p>
+            </div>
+          )}
         </label>
 
       </div>
